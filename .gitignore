@@ -1,0 +1,10 @@
+# Generated figures (regenerate with: python run_all.py)
+*.png
+*.pdf
+
+# Python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.venv/
+venv/
