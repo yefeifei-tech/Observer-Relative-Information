@@ -11,6 +11,7 @@ import subprocess
 import sys
 
 SCRIPTS = [
+    "fig1_framework_overview.py",
     "exp1_observer_spectrum.py",
     "exp2_negative_knowledge.py",
     "exp3_constraint_discovery.py",
@@ -18,6 +19,7 @@ SCRIPTS = [
     "exp5_bayesian_recovery.py",
     "exp5b_scaling_law.py",
     "exp6_phase_diagram.py",
+    "exp7_bigram.py",
 ]
 
 env = dict(os.environ)

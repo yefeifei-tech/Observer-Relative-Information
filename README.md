@@ -5,19 +5,23 @@ Computational experiments for the paper:
 > **Negative Knowledge and Observer-Relative Information: Recovering Shannon Mutual Information as a Special Case**
 > Evan Ye (Independent Researcher)
 
-This repository contains the seven self-contained Python scripts that generate every figure in the paper. All quantities are computed **exactly** from analytically specified Markov chains — there is no sampling, no random seed, and no external data. Running a script reproduces the corresponding figure bit-for-bit.
+This repository contains the Python scripts that generate every figure in the paper. The experiments on synthetic Markov chains (`exp1`–`exp6`) compute all quantities **exactly** — no sampling, no random seed, no external data — so they reproduce bit-for-bit. `exp7_bigram.py` validates the framework on real text (letter bigrams from a public-domain book downloaded at run time), and `fig1_framework_overview.py` draws the schematic overview figure.
 
-## Figure map
+> Figure numbering differs between manuscript versions of this work, so the scripts below are listed by topic rather than by a fixed figure number.
 
-| Script | Paper figure | Topic |
-|--------|--------------|-------|
-| `exp1_observer_spectrum.py`    | Fig. 1 | Observer spectrum: `I_ORI` varies while `I_Shannon` is fixed; degeneracy at λ = 0 |
-| `exp2_negative_knowledge.py`   | Fig. 2 | Negative knowledge: observers whose model is worse than ignorance (`A_M < 0`) |
-| `exp3_constraint_discovery.py` | Fig. 3 | Constraint discovery: marginal contribution to `R_C` distinguishes structure from noise |
-| `exp4_observer_dependent.py`   | Fig. 4 | Observer-dependent information: one system, four observers, four values of `I_ORI` |
-| `exp5_bayesian_recovery.py`    | Fig. 5 | Recovery from negative knowledge via Bayesian updating; critical evidence `n*` |
-| `exp5b_scaling_law.py`         | Fig. 6 | Recovery scaling law `n* = α·c` (Theorem 2) and its numerical verification |
-| `exp6_phase_diagram.py`        | Fig. 7 | Knowledge phase diagram in a coarse-grained double-well potential |
+## Script map
+
+| Script | Topic |
+|--------|-------|
+| `fig1_framework_overview.py`   | Schematic overview of the observer-relative framework |
+| `exp1_observer_spectrum.py`    | Observer spectrum: `I_ORI` varies while `I_Shannon` is fixed; degeneracy at λ = 0 |
+| `exp2_negative_knowledge.py`   | Negative knowledge: observers whose model is worse than the transition-ignorant baseline (`A_M < 0`) |
+| `exp3_constraint_discovery.py` | Constraint structure: marginal contribution to `R_C` distinguishes structure from noise |
+| `exp4_observer_dependent.py`   | Observer-dependent information: one system, four observers, four values of `I_ORI` |
+| `exp5_bayesian_recovery.py`    | Recovery from negative knowledge via Bayesian updating; critical evidence `n*` |
+| `exp5b_scaling_law.py`         | Recovery scaling law `n* = α·c` and its numerical verification |
+| `exp6_phase_diagram.py`        | Knowledge phase diagram in a coarse-grained double-well potential |
+| `exp7_bigram.py`               | Empirical validation on natural-language letter bigrams (real data) |
 
 ## Key quantities (notation matches the paper)
 
@@ -49,6 +53,7 @@ Tested with Python 3.8+, NumPy 1.20+, Matplotlib 3.3+, SciPy 1.5+.
 Each script is independent and writes its figure (`.png` and `.pdf`) to the current directory:
 
 ```bash
+python fig1_framework_overview.py
 python exp1_observer_spectrum.py
 python exp2_negative_knowledge.py
 python exp3_constraint_discovery.py
@@ -56,6 +61,7 @@ python exp4_observer_dependent.py
 python exp5_bayesian_recovery.py
 python exp5b_scaling_law.py
 python exp6_phase_diagram.py
+python exp7_bigram.py   # downloads a public-domain text at run time
 ```
 
 To regenerate all figures at once:
@@ -68,7 +74,8 @@ Each script also prints the numerical results (information values, critical evid
 
 ## Reproducibility notes
 
-- **Deterministic.** Every result is an exact expectation over the stationary distribution of a fixed transition matrix. No random number generator is used, so output is identical across runs and platforms.
+- **Deterministic (`exp1`–`exp6`).** Every result is an exact expectation over the stationary distribution of a fixed transition matrix. No random number generator is used, so output is identical across runs and platforms.
+- **Experiment 7 (real data).** `exp7_bigram.py` downloads a public-domain book from Project Gutenberg at run time and estimates the bigram statistics from it; if the download is unavailable it falls back to a short embedded passage. The numbers depend on the text, but the qualitative predictions — degeneracy at the transition-ignorant observer, and `A_M < 0` for the reversed-bigram observer — hold for any English text.
 - **Self-contained.** Each script defines its own system and helper functions; none depends on the output of another.
 - **Console encoding.** A couple of scripts print Unicode (`✓`, `×`) and Chinese annotations. On Windows terminals set `PYTHONIOENCODING=utf-8` if you see an encoding error.
 
